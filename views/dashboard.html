@@ -1,0 +1,1977 @@
+<!-- views/dashboard.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <!-- Enlaza Font Awesome -->  
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />  
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ------------------------header--------------------- -->
+
+    <div class="header">
+        <div class="logout">
+            <button class="logoutbtn" id="logoutButton">Cerrar sesión</button>
+        </div>
+        <div class="titulo">
+            <p>Leads</p>
+        </div>
+        <div class="user">
+            <button class="ejec" id="openEjecutivosModal">
+                <div class="" id="ejecutivoActivo"></div>
+            </button>
+
+        </div>
+    </div>
+
+    <!-- ------------------------body--------------------- -->
+
+<div class="cuerpo">
+
+    <!-- ------------------------funcionalidades--------------------- -->
+    <div class="funcionalidades">
+
+        <div class="seccion1">
+            <div class="secciondescarga">
+                <button class="descargar" id="openFilterModalBtn">
+                    <span class="material-symbols-outlined">
+                        download
+                    </span>
+                </button>
+            </div>
+    
+            <div class="seccionagregar">
+                <button class="btnagregar" id="openModalBtn">
+                    <span class="material-symbols-outlined blanco">
+                        add_2
+                    </span>
+                </button>
+            </div>
+    
+            <div class="seccionagregarcurso">
+                <button class="btncurso" id="addCourseButton">Agregar Curso</button>
+            </div>   
+
+        </div>
+
+        <div class="seccion2">
+
+            <div class="irinscritos">
+                <a href="inscritos.html">
+                    <button class="btninscritos">Inscritos</button>
+                </a> 
+            </div>
+            <div class="irmasivos">
+                <a href="masivos.html">
+                    <button class="btnmasivos">En gestión</button>
+                </a>
+            </div>
+            <div class="irnoquiere">
+                <a href="noquiere.html">
+                    <button class="btnnoquiere">No quiere</button>
+                </a> 
+            </div>
+        </div>
+
+        <div class="seccion3">
+            <div class="buscador">
+                <input class="buscar" type="text" id="leadSearchInput" placeholder="Buscar...">
+                <span class="material-symbols-outlined">
+                    search
+                </span>
+            </div>
+
+            <div class="filtrointeres">
+                <select id="sortCriteria">
+                    <option value="">Interes</option>
+                    <option value="interesDesc"> Mayor a Menor</option>
+                    <option value="interesAsc">Menor a Mayor</option>
+                </select>
+            </div>
+
+            <div class="filtrociudad">
+                <select id="cityFilter">
+                    <option value="">Ciudades</option>
+                </select>
+            </div>
+
+        </div>
+
+    </div>
+
+<!-- ------------------------tabla--------------------- -->
+
+    <div class="leads-container2">
+        <div class="lead-card2">
+            <div class="lead-cell fecha">Fecha</div>
+            <div class="separator"></div> <!-- Línea separadora -->
+            <div class="lead-cell numero2">Número</div>
+            <div class="separator"></div> <!-- Línea separadora -->
+            <div class="lead-cell ciudad">Ciudad</div>
+            <div class="separator"></div> <!-- Línea separadora -->
+            <div class="lead-cell curso">Curso</div>
+            <div class="separator"></div> <!-- Línea separadora -->
+            <div class="lead-cell interes">Interés</div>
+            <div class="separator"></div> <!-- Línea separadora -->
+            <div class="lead-cell comentariost">Comentarios</div>
+            <div class="separator"></div> <!-- Línea separadora -->
+            <div class="lead-cell acciones">Acciones</div>
+        </div>
+    </div>
+
+    <!-- Contenedor de Leads -->
+    <div id="leadsContainer" class="leads-container"></div>
+
+
+<!-- ------------------------modales--------------------- -->
+
+<!-- Modal para seleccionar ejecutivo -->
+<div id="ejecutivosModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal close">&times;</span>
+        <div class="tituloform">
+            <h2>Seleccionar Ejecutivo</h2>
+        </div>
+
+        <div id="ejecutivosList"></div> <!-- Aquí se llenarán las tarjetas de los ejecutivos -->
+    </div>
+</div>
+
+
+
+<!-- Modal para agregar un nuevo lead -->
+<div id="addLeadModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeModalBtn">&times;</span>
+        <div class="tituloform">
+            <h2>Agregar Nuevo Lead</h2>
+        </div>
+
+        <form id="addLeadForm">
+            
+            <!-- Contenedor donde se agregarán múltiples entradas de nombre y número -->
+            <div id="leadEntriesContainer">
+                <div class="lead-entry">
+                    <label for="numero">Número:</label>
+                    <input type="number" class="numero" required><br><br>
+
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" class="nombre" ><br><br>
+                </div>
+            </div>
+
+            <button type="button" class="btnmasleads" id="addLeadEntryBtn">Agregar más</button><br><br>
+
+            <label for="ciudad">Ciudad :</label>
+            <input type="text" id="ciudad"><br><br>
+
+            <label for="cursoSelect">Curso :</label>
+            <select id="cursoSelect">
+                <option value="">Seleccione un curso</option>
+            </select>
+            
+            <input type="text" id="cursoFecha" placeholder="Fecha del curso" readonly /><br><br>
+
+            <label for="interes">Interés :</label>
+            <select id="interes">
+                <option value="">Seleccione un interés</option>
+                <option value="30">30</option>
+                <option value="50">50</option>
+                <option value="80">80</option>
+                <option value="90">90</option>
+            </select><br><br>
+
+            <button type="submit" class="btnenviarleads">Agregar Leads</button>
+        </form>
+        <br>
+    </div>
+</div>
+
+
+
+<!-- Modal de Filtrado y Exportación -->
+<div id="filterExportModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" id="closeFilterModalBtn">&times;</span>
+        <div class="tituloform">
+            <h2>Filtrar y Exportar Leads</h2>
+        </div>
+        <!-- Formulario de filtros -->
+        <form id="filterForm">
+            <div class="filtro1">
+                <div class="izq">
+                    <label for="filterCiudad">Ciudad:</label>
+                    <select id="filterCiudad">
+                        <option value="">Seleccione una ciudad</option>
+                    </select>
+                </div>
+                <div class="der">
+                    <label for="filterCurso">Curso:</label>
+                    <select id="filterCurso">
+                        <option value="">Seleccione un curso</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filtro2">
+                <div class="izq">
+                    <label for="filterFechaDesde">Fecha Desde:</label>
+                    <input type="date" id="filterFechaDesde">
+                </div>
+                <div class="der">
+                    <label for="filterFechaHasta">Fecha Hasta:</label>
+                    <input type="date" id="filterFechaHasta">
+                </div>
+            </div>
+            <div class="filtro3">
+                <div class="izq">
+                    <label for="filterInteres">Interés:</label>
+                    <input type="number" id="filterInteres" min="0" max="100">    
+                </div>
+                <div class="der">
+                    <label for="filterStatus">Estado:</label>
+                    <select id="filterStatus">
+                        <option value="">Seleccione un estado</option>
+                        <option value="Leads">Leads</option> 
+                        <option value="Inscritos">Inscritos</option>
+                        <option value="Masivos">En Gestion</option>
+                        <option value="NoQuiere">No Quiere</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn1" type="button" id="applyFilterBtn">Aplicar Filtro</button>
+        </form>
+        <br>
+        <!-- Vista previa de los datos filtrados -->
+         <div class="tituloform">
+            <h3>Vista Previa de Datos Filtrados</h3>
+         </div>
+        <table class="tablafiltro" id="previewTable">
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Nombre</th>
+                    <th>Ciudad</th>
+                    <th>Curso</th>
+                    <th>Interés</th>
+                    <th>Comentario</th>
+                    <th>Fecha</th>
+                </tr>
+            </thead>
+            <tbody class="tablafiltro2"></tbody>
+        </table>
+
+        <!-- Botón para exportar -->
+        <button class="btn2" id="exportFilteredDataBtn">Exportar Filtrado</button>
+    </div>
+</div>
+
+    <!-- Modal para agregar comentario -->
+    <div id="commentModal" class="modal">
+        <div class="modal-content">
+        <span id="closeCommentModal" class="close">&times;</span>
+        <div class="tituloform">
+            <h2>Agregar Comentario</h2>
+        </div>
+
+        <form id="commentForm">
+            <div class="centrar">
+                <label for="commentText">Comentario:</label>
+                <textarea id="commentText" name="commentText" required></textarea>
+                <input type="hidden" id="leadId" name="leadId">
+                <button class="btn2" type="submit">Agregar Comentario</button>
+            </div>
+        </form>
+        <br>
+        <div class="tituloform">
+            <h3>Comentarios Anteriores</h3>
+        </div>
+
+        <div id="previousComments"></div> <!-- Aquí se mostrarán los comentarios -->
+        </div>
+    </div>
+    
+    <div id="editLeadModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('editLeadModal').style.display='none'">&times;</span>
+            <div class="tituloform">
+                <h2>Editar Lead</h2>
+            </div>
+            <form id="editLeadForm">
+
+                <input type="hidden" id="editLeadId" value=""> <!-- El valor se debe establecer antes de abrir el modal -->
+
+            <div class="centrar">
+                <label for="editNombre">Nombre:</label>
+                <input type="text" id="editNombre" >
+
+                <label for="editNumero">Número:</label>
+                <input type="text" id="editNumero" >
+    
+                <label for="editCiudad">Ciudad:</label>
+                <input type="text" id="editCiudad" >
+            </div>
+            <div class="centrar">
+                <label for="editInteres">Interés:</label>
+                <select id="editInteres">
+                    <option value="">Seleccione un interés</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                    <option value="80">80</option>
+                    <option value="90">90</option>
+                </select><br><br>
+    
+                <label for="editcursoSelect">Curso:</label>
+                <select id="editcursoSelect" >
+                    <option value="">Seleccione un curso</option>
+                    <!-- Las opciones se llenarán dinámicamente aquí -->
+                </select>
+    
+                <label for="editCursoFecha">Fecha del Curso:</label>
+                <input type="date" id="editCursoFecha" required readonly>
+            </div>
+                <button class="btn2" type="button" id="saveButton" onclick="saveLead()">Guardar</button> <!-- type="button" para evitar envío automático -->
+            </form>
+        </div>
+    </div>
+    
+    
+
+
+    <!-- Modal para agregar/editar curso -->
+  <!-- Modal para agregar/editar curso -->
+<div id="cursoModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closecursoModal">&times;</span>
+
+        <div class="tituloform">
+            <h2 id="modalTitle">Agregar Curso</h2>
+        </div>
+
+        <form id="cursoForm">
+            <div class="centrar">
+                <label for="nombreCurso">Nombre del Curso:</label>
+                <input type="text" id="nombreCurso" name="nombre" required>
+
+                <label for="fechaCurso">Fecha del Curso:</label>
+                <input type="date" id="fechaCurso" name="fecha">
+
+                <input type="hidden" id="cursoId" name="cursoId">
+                <button class="btn2" type="submit" id="submitCurso">Guardar</button>
+            </div>
+        </form>
+        <br>
+        <div class="tituloform">
+            <h3>Cursos Existentes</h3>
+        </div>
+
+        <table class="tabladecursos" style="max-height: 400px; overflow-y: auto;">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="cursoTableBody">
+                <!-- Los cursos se agregarán dinámicamente aquí -->
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+<!-- modal para cambiar de ejecutivo  -->
+
+    <div id="changeExecutiveModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('changeExecutiveModal').style.display='none'">&times;</span>
+            <div class="tituloform">
+                <h2>Cambiar Ejecutivo</h2>
+            </div>
+            <form id="changeExecutiveForm">
+                <div class="ejecutivo">
+                    <input type="hidden" id="leadId" value="">
+                    <label for="executiveSelect">Seleccionar Ejecutivo:</label>
+                    <select id="executiveSelect" required>
+                        <option value="">Seleccione un ejecutivo</option>
+                        <!-- Las opciones se llenarán dinámicamente aquí -->
+                    </select>
+                </div>
+                <div class="botones">
+                    <button class="btn2" type="button" onclick="changeExecutive()">Enviar</button>
+                    <button class="btn3" type="button" onclick="document.getElementById('changeExecutiveModal').style.display='none'">Cancelar</button>
+                </div>
+        
+            </form>
+        </div>
+    </div>
+</div>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', async () => {
+
+            const userRole = localStorage.getItem('role'); // Asumiendo que el rol está guardado en localStorage
+
+            if (userRole === 'admin') {
+                document.getElementById('openEjecutivosModal').style.display = 'block'; // Mostrar el botón solo al administrador
+            }
+
+            // Asignar evento para abrir el modal
+            document.getElementById('openEjecutivosModal').addEventListener('click', () => {
+                document.getElementById('ejecutivosModal').style.display = 'block';
+                fetchEjecutivos(); // Cargar los ejecutivos al abrir el modal
+            });
+
+            // Asignar evento para cerrar el modal
+            document.querySelector('.close-modal').addEventListener('click', () => {
+                document.getElementById('ejecutivosModal').style.display = 'none';
+            });
+
+
+
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+
+        // Si hay un ejecutivo seleccionado, cargar sus leads
+        await fetchLeads();
+        await fetchEjecutivoNombre();
+// Agregar funcionalidad para añadir más entradas de nombre y número
+document.getElementById('addLeadEntryBtn').addEventListener('click', () => {
+    const leadEntry = document.createElement('div');
+    leadEntry.classList.add('lead-entry');
+    
+    leadEntry.innerHTML = `
+        <label for="numero">Número:</label>
+        <input type="number" class="numero" required>
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" class="nombre" >
+        <button type="button" class="remove-entry-btn">X</button>
+    `;
+    
+    document.getElementById('leadEntriesContainer').appendChild(leadEntry);
+        // Añadir evento de clic para el botón "X" de esta entrada específica
+        leadEntry.querySelector('.remove-entry-btn').addEventListener('click', () => {
+        leadEntry.remove();
+    });
+});
+// Manejo del envío del formulario
+document.getElementById('addLeadForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+
+    const ciudad = document.getElementById('ciudad').value;
+    const cursoId = document.getElementById('cursoSelect').value;
+    const interes = document.getElementById('interes').value;
+    const ejecutivoId = localStorage.getItem('selectedEjecutivo'); // Obtener el ejecutivoId activo
+
+    // Recoger múltiples nombres y números
+    const nombres = [...document.querySelectorAll('.nombre')].map(input => input.value);
+    const numeros = [...document.querySelectorAll('.numero')].map(input => input.value);
+
+    const leads = nombres.map((nombre, index) => ({
+        nombre,
+        numero: numeros[index],
+        ciudad,
+        cursoId,
+        interes
+    }));
+
+    // Enviar el array de leads al backend
+    const response = await fetch(`/api/leadsmasivo?ejecutivoId=${ejecutivoId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ leads })
+    });
+
+    if (response.ok) {
+        // alert('Leads agregados exitosamente');
+        document.getElementById('addLeadModal').style.display = 'none'; // Cerrar el modal
+        // Restablecer los campos del formulario
+        document.getElementById('addLeadForm').reset();
+
+               // Eliminar todas las entradas adicionales de leads excepto la primera
+               const leadEntriesContainer = document.getElementById('leadEntriesContainer');
+        leadEntriesContainer.innerHTML = ''; // Limpia todo el contenido
+        const firstLeadEntry = document.createElement('div');
+        firstLeadEntry.classList.add('lead-entry');
+        firstLeadEntry.innerHTML = `
+            <label for="numero">Número:</label>
+            <input type="number" class="numero" required><br><br>
+
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="nombre" ><br><br>
+        `;
+        leadEntriesContainer.appendChild(firstLeadEntry);
+        await fetchLeads(); // Recargar la lista de leads
+        await fetchCities();
+    } else {
+        const errorData = await response.json();
+        alert(`Error al agregar los leads: ${errorData.message}`);
+    }
+});
+
+
+            const cursoModal = document.getElementById('cursoModal');
+            const addCourseButton = document.getElementById('addCourseButton');
+
+            const cursoForm = document.getElementById('cursoForm');
+            const cursoTableBody = document.getElementById('cursoTableBody');
+            const modalTitle = document.getElementById('modalTitle');
+            const cursoIdInput = document.getElementById('cursoId');
+            let isEditing = false;
+
+             // Abrir el modal
+             addCourseButton.addEventListener('click', () => {
+                openModal();
+            });
+
+            // Cerrar el modal
+            const closeModalCursoBtn = document.getElementById("closecursoModal");
+            
+            closeModalCursoBtn.onclick = function() {
+                cursoModal.style.display = "none";
+            };
+            
+            // Cerrar el modal al hacer clic fuera del contenido del modal
+            window.addEventListener('click', (event) => {
+                if (event.target === cursoModal) {
+                    closeModal();
+                }
+            });
+
+        // Función para abrir el modal
+        function openModal(course = null) {
+            if (course) {
+                // Si es para editar, rellenar los campos
+                modalTitle.textContent = 'Editar Curso';
+                document.getElementById('nombreCurso').value = course.Nombre;
+
+                // Convertir la fecha al formato YYYY-MM-DD
+                const fecha = new Date(course.Fecha);
+                const fechaFormateada = fecha.toISOString().split('T')[0]; // Obtén solo la fecha en formato 'YYYY-MM-DD'
+                document.getElementById('fechaCurso').value = fechaFormateada; // Establecer la fecha
+
+                cursoIdInput.value = course.Curso_ID;
+                isEditing = true;
+            } else {
+                // Si es para agregar uno nuevo, limpiar los campos
+                modalTitle.textContent = 'Agregar Curso';
+                cursoForm.reset();
+                cursoIdInput.value = '';
+                isEditing = false;
+            }
+            cursoModal.style.display = 'flex';
+            fetchCursos(); // Cargar los cursos al abrir el modal
+        }
+
+
+            // Función para cerrar el modal
+            function closeModal() {
+                cursoModal.style.display = 'none';
+            }
+
+            // Manejar el envío del formulario de curso
+            cursoForm.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                const nombre = document.getElementById('nombreCurso').value;
+                const fecha = document.getElementById('fechaCurso').value;
+                const cursoId = cursoIdInput.value;
+
+                if (isEditing) {
+                    // Editar curso
+                    await editarCurso(cursoId, { nombre, fecha });
+                } else {
+                    // Agregar nuevo curso
+                    await agregarCurso({ nombre, fecha });
+                }
+                cursoForm.reset();
+                fetchCursos(); // Recargar los cursos después de agregar/editar
+            });
+
+            // Función para agregar un curso
+            async function agregarCurso(cursoData) {
+                try {
+                    const response = await fetch('/api/cursos', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}` // Incluye el token en el encabezado
+                        },
+                        body: JSON.stringify(cursoData)
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        // alert('Curso agregado exitosamente');
+                    } else {
+                        alert('Error al agregar curso: ' + data.message);
+                    }
+                } catch (error) {
+                    console.error('Error al agregar curso:', error);
+                }
+            }
+
+            // Función para editar un curso
+            async function editarCurso(id, cursoData) {
+                try {
+                    const response = await fetch(`/api/cursos/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}` // Incluye el token en el encabezado
+                        },
+                        body: JSON.stringify(cursoData)
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        // alert('Curso editado exitosamente');
+                    } else {
+                        alert('Error al editar curso: ' + data.message);
+                    }
+                } catch (error) {
+                    console.error('Error al editar curso:', error);
+                }
+            }
+
+            // Función para eliminar un curso
+            async function eliminarCurso(id) {
+                if (confirm('¿Estás seguro de que deseas eliminar este curso?')) {
+                    try {
+                        const response = await fetch(`/api/cursos/${id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': `Bearer ${token}` // Incluye el token en el encabezado
+                            }
+                        });
+                        const data = await response.json();
+                        if (response.ok) {
+                            // alert('Curso eliminado exitosamente');
+                        } else {
+                            alert('Error al eliminar curso: ' + data.message);
+                        }
+                        fetchCursos(); // Recargar los cursos después de eliminar
+                    } catch (error) {
+                        console.error('Error al eliminar curso:', error);
+                    }
+                }
+            }
+
+            // Función para obtener y mostrar todos los cursos
+            async function fetchCursos() {
+                try {
+                    const response = await fetch('/api/cursos', {
+                        headers: {
+                            'Authorization': `Bearer ${token}` // Incluye el token en el encabezado
+                        }
+                    });
+                    const cursos = await response.json();
+                    renderCursos(cursos);
+                } catch (error) {
+                    console.error('Error al obtener los cursos:', error);
+                }
+            }
+
+            // Función para renderizar los cursos en la tabla dentro del modal
+            function renderCursos(cursos) {
+                cursoTableBody.innerHTML = ''; // Limpiar el contenido previo
+
+                cursos.forEach((curso) => {
+                    const row = document.createElement('tr');
+
+                    // Celda del nombre del curso
+                    const nombreCell = document.createElement('td');
+                    nombreCell.textContent = curso.Nombre;
+                    row.appendChild(nombreCell);
+
+                    // Celda de la fecha del curso
+                    const fechaCell = document.createElement('td');
+                    fechaCell.className = 'medio';
+                    fechaCell.textContent = curso.Fecha;
+                    row.appendChild(fechaCell);
+
+                    // Celda de acciones (botones)
+                    const actionsCell = document.createElement('td');
+                    actionsCell.className = 'derecha';
+
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Editar';
+                    editButton.className = 'editarbtn'; // Añadir clases al botón de editar
+                    editButton.addEventListener('click', () => openModal(curso));
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Eliminar';
+                    deleteButton.className = 'eliminarbtn'; // Añadir clases al botón de eliminar
+                    deleteButton.addEventListener('click', () => eliminarCurso(curso.Curso_ID));
+
+                    actionsCell.appendChild(editButton);
+                    actionsCell.appendChild(deleteButton);
+                    row.appendChild(actionsCell);
+
+                    // Agregar la fila a la tabla
+                    cursoTableBody.appendChild(row);
+                });
+            }
+
+
+            // Inicializar la carga de cursos
+            fetchCursos();
+
+const ejecutivoId = localStorage.getItem('selectedEjecutivo');
+            let url = '/api/leads';
+
+            // Si se pasa un ejecutivoId, se agrega a la URL para filtrar los leads
+            if (ejecutivoId) {
+                url += `?ejecutivoId=${ejecutivoId}`;
+            }
+            
+            const res = await fetch(url, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+if (!res.ok) {
+    const errorData = await res.json();
+    alert(`Error al cargar los leads: ${errorData.message}`);
+    return;
+}
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0]; // Obtener solo la parte de la fecha en formato YYYY-MM-DD
+}
+const leads = await res.json();
+const leadsContainer = document.querySelector('#leadsContainer');
+leadsContainer.innerHTML = ''; // Limpiar el contenedor
+
+leads.forEach(lead => {
+    const formattedDate = formatDate(lead.FechaCreacion);
+    const card = `
+        <div class="lead-card">
+            <div class="lead-card-body">
+
+                    <div class="lead-cell fecha">${formattedDate}</div>
+                    <div class="separator"></div>
+                    <div class="lead-cell numero2">${lead.Numero}</div>
+                    <div class="separator"></div>
+                    <div class="lead-cell ciudad">${lead.Ciudad}</div>
+                    <div class="separator"></div>
+                    <div class="lead-cell curso">${lead.CursoNombre || 'Sin Curso'}</div>
+                    <div class="separator"></div>
+                    <div class="lead-cell interes">${lead.Interes}%</div>
+                    <div class="separator"></div>
+                    <div class="comentarios">
+                        <div class="lead-cell ultimocomentario">${lead.UltimoComentario || 'Sin Comentario'}</div> <!-- Mostrar último comentario -->
+                        <div class="lead-cell btncomentario">
+                            <button class="open-comment-modal addcoment" data-lead-id="${lead.Cliente_ID}">Agregar</button>
+                        </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="lead-cell acciones">
+                        <button class="btn-yes"  onclick="addToInscritos('${lead.Cliente_ID}')">Inscritos</button>
+                        <button class="btn-nose"  onclick="addToMasivos('${lead.Cliente_ID}')">En gestión</button>
+                        <button class="btn-no"  onclick="addToNoQuiere('${lead.Cliente_ID}')">No quiere</button>
+                    </div>
+
+            </div>
+
+            <div class="editejec">
+                <div class="lead-card-body-edit">
+                    <div class="edit-delete-card">
+                        <button class="btn-edit"  onclick="editLead('${lead.Cliente_ID}')">
+                            <span class="material-symbols-outlined">
+                                edit
+                            </span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lead-card-body-ejec">
+                    <div class="edit-delete-card">
+                        <button class="btn-comercial"  onclick="openChangeExecutiveModal('${lead.Cliente_ID}')">
+                            <span class="material-symbols-outlined">
+                                group
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+    leadsContainer.innerHTML += card;
+});
+// boton para eliminar un lead 
+// <button class="btn-delete" style="background-color: orange; color: white;" onclick="deleteLead('${lead.Cliente_ID}')">Eliminar</button>
+
+            // Asegurarse de que los botones se enlacen correctamente después de renderizar las tarjetas
+            document.querySelectorAll('.open-comment-modal').forEach(button => {
+                button.addEventListener('click', function() {
+                    const leadId = this.getAttribute('data-lead-id');
+                    console.log("Abriendo modal para lead con ID:", leadId); // Verifica que esto no sea undefined
+                    openCommentModal(leadId);
+                });
+            });
+
+
+
+
+        });
+ 
+
+
+// Escuchar cuando el usuario escribe en el campo de búsqueda
+document.getElementById('leadSearchInput').addEventListener('input', function() {
+    const query = this.value.toLowerCase(); // Convertir el texto a minúsculas para hacer una búsqueda no sensible a mayúsculas/minúsculas
+    filterLeads(query);
+});
+
+
+// Función para filtrar los leads basados en la consulta de búsqueda
+function filterLeads(query) {
+    const leadCards = document.querySelectorAll('.lead-card'); // Selecciona todas las tarjetas de leads
+
+    leadCards.forEach(card => {
+        // Utiliza las clases específicas en lugar de índices
+        const fechaleadElement = card.querySelector('.fecha');
+        const numeroElement = card.querySelector('.numero2');
+        const ciudadElement = card.querySelector('.ciudad');
+        const cursoNombreElement = card.querySelector('.curso');
+        const interesElement = card.querySelector('.interes');
+        const ultimoComentarioElement = card.querySelector('.ultimocomentario');
+
+        // Verifica que cada elemento exista antes de leer su contenido
+        const fechalead = fechaleadElement ? fechaleadElement.textContent.toLowerCase() : '';
+        const numero = numeroElement ? numeroElement.textContent.toLowerCase() : '';
+        const ciudad = ciudadElement ? ciudadElement.textContent.toLowerCase() : '';
+        const cursoNombre = cursoNombreElement ? cursoNombreElement.textContent.toLowerCase() : '';
+        const interes = interesElement ? interesElement.textContent.toLowerCase() : '';
+        const ultimoComentario = ultimoComentarioElement ? ultimoComentarioElement.textContent.toLowerCase() : '';
+  
+        // Si alguno de los campos contiene el texto de búsqueda, mostramos la tarjeta
+        if (
+            fechalead.includes(query) || 
+            numero.includes(query) || 
+            ciudad.includes(query) || 
+            cursoNombre.includes(query) || 
+            interes.includes(query) || 
+
+            ultimoComentario.includes(query) // Agregado para buscar en comentarios
+        ) {
+            card.style.display = ''; // Mostrar la tarjeta si coincide
+        } else {
+            card.style.display = 'none'; // Ocultar la tarjeta si no coincide
+        }
+    });
+}
+
+
+document.getElementById('sortCriteria').addEventListener('change', function() {
+    const criteria = this.value;
+    sortLeads(criteria);
+});
+
+function sortLeads(criteria) {
+    const leadsContainer = document.getElementById('leadsContainer');
+    const leadCards = Array.from(leadsContainer.querySelectorAll('.lead-card'));
+
+    leadCards.sort((a, b) => {
+        switch (criteria) {
+            case 'interesDesc':
+                return parseInt(b.querySelector('.lead-cell:nth-child(9)').textContent, 10) - 
+                       parseInt(a.querySelector('.lead-cell:nth-child(9)').textContent, 10);
+            case 'interesAsc':
+                return parseInt(a.querySelector('.lead-cell:nth-child(9)').textContent, 10) - 
+                       parseInt(b.querySelector('.lead-cell:nth-child(9)').textContent, 10);
+            default:
+                return 0;
+        }
+    });
+
+    leadsContainer.innerHTML = '';
+    leadCards.forEach(card => leadsContainer.appendChild(card));
+}
+
+
+        const modalcoment = document.getElementById("commentModal");
+        const closeModalComentBtn = document.getElementById("closeCommentModal");
+
+        closeModalComentBtn.onclick = function() {
+            modalcoment.style.display = "none";
+        };
+
+        function openCommentModal(leadId) {
+            if (!leadId) {
+                console.error("leadId está indefinido. No se puede abrir el modal.");
+                alert("Error: no se pudo obtener el ID del lead.");
+                return;
+            }
+            modalcoment.style.display = "block";  
+            document.getElementById('leadId').value = leadId; 
+            fetchComments(leadId); 
+        }
+
+        // Función para cerrar el modal de comentarios
+        closeModalComentBtn.onclick = function() {
+            modalcoment.style.display = "none";
+        }
+
+        // Cerrar el modal si el usuario hace clic fuera de él
+        window.onclick = function(event) {
+            if (event.target === modalcoment) {
+                modalcoment.style.display = "none";
+            }
+        }
+
+        // Abrir modal
+
+
+
+
+// Cerrar modal cuando se hace clic fuera de él
+
+
+// Manejo del clic en el botón "Guardar Campos"
+// Manejo del clic en el botón "Guardar Campos"
+let camposGuardados = false; // Bandera para verificar si los campos están guardados
+const guardarCamposBtn = document.getElementById('guardarCamposBtns'); // Obtener el botón
+
+
+
+        // Funciones para abrir y cerrar el modal
+        const modal = document.getElementById("addLeadModal");
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+        // Llama a esta función cuando se abra el modal
+
+        openModalBtn.onclick = function() {
+            loadCourses(); // Cargar los cursos cada vez que se abra el modal
+            modal.style.display = "block";
+            const ciudad = localStorage.getItem('ciudad') || '';
+            const cursoSelect = localStorage.getItem('cursoSelect') || '';
+            const cursoFecha = localStorage.getItem('cursoFecha') || '';
+            console.log("el curso seelct: " + cursoSelect);
+            document.getElementById('ciudad').value = ciudad;
+            document.getElementById('cursoSelect').value = cursoSelect;
+            document.getElementById('cursoFecha').value = cursoFecha;
+        }
+
+        closeModalBtn.onclick = function() {
+            console.log("funciona cerrar");
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+
+
+        // Elementos del DOM para abrir y cerrar el modal
+// const openModalBtnfiltro = document.getElementById('openExportFilterModalBtn');
+// const modalfiltro = document.getElementById('exportFilterModal');
+// const closeModalBtnfiltro = document.getElementById('closeExportModalBtn');
+
+// // Evento para abrir el modal al hacer clic en el botón
+// openModalBtnfiltro.addEventListener('click', () => {
+//     modalfiltro.style.display = 'block';
+// });
+
+// // Evento para cerrar el modal al hacer clic en el botón de cerrar (x)
+// closeModalBtnfiltro.addEventListener('click', () => {
+//     modalfiltro.style.display = 'none';
+// });
+
+// // Cerrar el modal cuando se hace clic fuera del contenido del modal
+// window.addEventListener('click', (event) => {
+//     if (event.target === modalfiltro) {
+//         modalfiltro.style.display = 'none';
+//     }
+// });
+
+        
+
+// Llamar a la API para obtener las ciudades únicas
+async function fetchCities() {
+    const token = localStorage.getItem('token');
+
+    const ejecutivoId = localStorage.getItem('selectedEjecutivo');
+            let url = '/api/ciudades';
+
+            // Si se pasa un ejecutivoId, se agrega a la URL para filtrar los leads
+            if (ejecutivoId) {
+                url += `?ejecutivoId=${ejecutivoId}`;
+            }
+            
+            const res = await fetch(url, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+    
+    if (res.ok) {
+        const cities = await res.json();
+        populateCityFilter(cities);
+    } else {
+        console.error('Error al obtener las ciudades');
+    }
+}
+
+// Función para llenar el filtro con las ciudades obtenidas
+function populateCityFilter(cities) {
+    const cityFilter = document.getElementById('cityFilter'); // Asumiendo que tienes un <select> con este ID
+    cityFilter.innerHTML = '<option value="">Ciudades</option>'; // Opción para ver todas las ciudades
+
+    cities.forEach(city => {
+        const option = document.createElement('option');
+        option.value = city;
+        option.textContent = city;
+        cityFilter.appendChild(option);
+    });
+}
+
+// Llamar a la función para obtener y mostrar las ciudades cuando cargue la página
+document.addEventListener('DOMContentLoaded', fetchCities);
+
+// Escuchar el evento de cambio en el filtro de ciudades
+document.getElementById('cityFilter').addEventListener('change', function() {
+    const selectedCity = this.value;
+    filterLeadsByCity(selectedCity);
+});
+
+// Función para filtrar los leads según la ciudad seleccionada
+function filterLeadsByCity(city) {
+    const leadCards = document.querySelectorAll('.lead-card'); // Selecciona todas las tarjetas de leads
+
+    leadCards.forEach(card => {
+        const leadCity = card.querySelector('.lead-cell:nth-child(5)').textContent.trim(); // Cambia el índice según tu estructura
+
+        // Si la ciudad coincide o si no se seleccionó ninguna ciudad, mostramos la tarjeta
+        if (!city || leadCity === city) {
+            card.style.display = ''; // Mostrar tarjeta
+        } else {
+            card.style.display = 'none'; // Ocultar tarjeta
+        }
+    });
+}
+
+
+// Función para cargar cursos
+async function loadCourses() {
+    const response = await fetch('/api/cursos', {
+        
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+    });
+
+    if (response.ok) {
+        const cursos = await response.json();
+        const cursoSelect = document.getElementById('cursoSelect');
+
+        // Limpiar el select antes de llenarlo
+        cursoSelect.innerHTML = '<option value="">Seleccione un curso</option>'; // Opción por defecto
+
+        // Llenar el desplegable
+        cursos.forEach(curso => {
+            const option = document.createElement('option');
+            option.value = curso.Curso_ID; // Guardar el ID del curso
+            option.textContent = `${curso.Nombre} - ${curso.Fecha}`; // No transforma la fecha
+            cursoSelect.appendChild(option);
+        });
+
+                // Verificar si hay un curso guardado en localStorage
+                const cursoGuardado = localStorage.getItem('cursoSelect');
+        if (cursoGuardado) {
+            cursoSelect.value = cursoGuardado; // Establecer el curso guardado como seleccionado
+        }
+
+        // Asegúrate de que el evento change se registre después de llenar el select
+        cursoSelect.addEventListener('change', (e) => {
+            const selectedCursoId = e.target.value;
+            const selectedOption = e.target.options[e.target.selectedIndex];
+
+            // Si se selecciona un curso, actualizar la fecha
+            if (selectedCursoId) {
+                const selectedCursoFecha = selectedOption.textContent.split('-').pop().trim(); // Extrae la fecha del texto
+                document.getElementById('cursoFecha').value = selectedCursoFecha; // Asigna la fecha al campo correspondiente
+            } else {
+                document.getElementById('cursoFecha').value = ''; // Limpiar si no hay selección
+            }
+        });
+    } else {
+        console.error('Error al cargar los cursos:', response.statusText);
+    }
+}
+
+// Para depurar el problema, puedes agregar un event listener de 'focus'
+document.getElementById('cursoSelect').addEventListener('focus', () => {
+    console.log('El select ha sido enfocado');
+});
+
+document.getElementById('addLeadModal').addEventListener('show.bs.modal', loadCourses);
+
+    async function fetchComments(leadId) {
+        const token = localStorage.getItem('token'); // Obtener el token
+        const res = await fetch(`/api/comments/${leadId}`, {
+            headers: {
+                'Authorization': `Bearer ${token}` // Enviar el token en los headers
+            }
+        });
+
+        console.log(`Fetching comments for leadId: ${leadId}`); // Verifica el ID del lead
+        if (res.ok) {
+            const comments = await res.json();
+            const commentsContainer = document.getElementById('previousComments');
+            commentsContainer.innerHTML = ''; // Limpiar comentarios anteriores
+
+            // Iterar sobre los comentarios obtenidos
+            comments.forEach(comment => {
+                const commentElement = document.createElement('div'); // Cambia a div para envolver el comentario y el botón
+                commentElement.classList.add('comentariosantes'); // Añadir la clase 'comment' al div
+                commentElement.innerHTML = `
+                    <p><b>Comentario : </b> ${comment.Comentario}</p>
+                    <p><b>Fecha : </b> ${new Date(comment.Fecha).toLocaleString()}</p>
+                    <button class="remove-entry-btn" onclick="deleteComment(${comment.Comentario_ID})">Eliminar</button>
+                `;
+                commentsContainer.appendChild(commentElement); // Agregar el nuevo elemento al contenedor
+            });
+        } else {
+            alert('Error al cargar los comentarios. Código de error: ' + res.status);
+        }
+    }
+
+
+
+    async function deleteComment(commentId) {
+        const token = localStorage.getItem('token'); // Obtener el token
+        try {
+            const response = await fetch(`http://localhost:3000/api/comments/${commentId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // Enviar el token para autorización
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al eliminar el comentario.');
+            }
+
+            const result = await response.json();
+            console.log(result.message); // Mensaje de éxito
+            // alert('Comentario eliminado exitosamente.');
+
+            // Actualizar los comentarios sin recargar la página
+            const leadId = document.getElementById('leadId').value; // Obtener el ID del lead actual
+            fetchComments(leadId); // Volver a cargar los comentarios
+        } catch (error) {
+            console.error(error.message);
+            alert(`Error al eliminar el comentario: ${error.message}`);
+        }
+    }
+
+    async function addToInscritos(clienteId) {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch('/api/inscritos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ Cliente_ID: clienteId })
+        });
+
+        if (response.ok) {
+            // alert('Cliente agregado a Inscritos exitosamente.');
+            await fetchLeads(); // Recargar los leads después de agregar
+            await fetchCities();
+        } else {
+            const errorData = await response.json();
+            alert(`Error al agregar a Inscritos: ${errorData.message}`);
+        }
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+        alert('Error al intentar agregar a Inscritos.');
+    }
+}
+
+async function addToMasivos(clienteId) {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch('/api/masivos', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ Cliente_ID: clienteId })
+        });
+
+        if (response.ok) {
+            // alert('Cliente agregado a Masivos exitosamente.');
+            await fetchLeads(); // Recargar los leads después de agregar
+        } else {
+            const errorData = await response.json();
+            alert(`Error al agregar a Masivos: ${errorData.message}`);
+        }
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+        alert('Error al intentar agregar a Masivos.');
+    }
+}
+
+
+async function addToNoQuiere(clienteId) {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch('/api/noquiere', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ Cliente_ID: clienteId })
+        });
+
+        if (response.ok) {
+            // alert('Cliente agregado a NoQuiere exitosamente.');
+            await fetchLeads(); // Recargar los leads después de agregar
+        } else {
+            const errorData = await response.json();
+            alert(`Error al agregar a Masivos: ${errorData.message}`);
+        }
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+        alert('Error al intentar agregar a Masivos.');
+    }
+}
+
+        // Función para cargar y mostrar los leads
+        async function fetchLeads() {
+            const token = localStorage.getItem('token'); // Obtener el token
+            const ejecutivoId = localStorage.getItem('selectedEjecutivo');
+            let url = '/api/leads';
+
+            // Si se pasa un ejecutivoId, se agrega a la URL para filtrar los leads
+            if (ejecutivoId) {
+                url += `?ejecutivoId=${ejecutivoId}`;
+            }
+            
+            const res = await fetch(url, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (!res.ok) {
+                const errorData = await res.json(); // Obtener mensaje de error del servidor
+                alert(`Error al cargar los leads: ${errorData.message}`);
+                return;
+            }
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toISOString().split('T')[0]; // Obtener solo la parte de la fecha en formato YYYY-MM-DD
+            }
+            const leads = await res.json();
+            const leadsContainer  = document.querySelector('#leadsContainer');
+            leadsContainer.innerHTML = ''; // Limpiar el contenedor
+            leads.forEach(lead => {
+                const formattedDate = formatDate(lead.FechaCreacion);
+                const card = `
+        <div class="lead-card">
+            <div class="lead-card-body">
+                    <div class="lead-cell fecha">${formattedDate}</div>
+                    <div class="separator"></div>
+                    <div class="lead-cell numero2">${lead.Numero}</div>
+                    <div class="separator"></div>
+                    <div class="lead-cell ciudad">${lead.Ciudad}</div>
+                    <div class="separator"></div>
+                    <div class="lead-cell curso">${lead.CursoNombre || 'Sin Curso'}</div>
+                    <div class="separator"></div>
+                    <div class="lead-cell interes">${lead.Interes}%</div>
+                    <div class="separator"></div>
+                    <div class="comentarios">
+                        <div class="lead-cell ultimocomentario">${lead.UltimoComentario || 'Sin Comentario'}</div> <!-- Mostrar último comentario -->
+                        <div class="lead-cell btncomentario">
+                            <button class="open-comment-modal addcoment" data-lead-id="${lead.Cliente_ID}">Agregar</button>
+                        </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div class="lead-cell acciones">
+                        <button class="btn-yes"  onclick="addToInscritos('${lead.Cliente_ID}')">Inscritos</button>
+                        <button class="btn-nose"  onclick="addToMasivos('${lead.Cliente_ID}')">En gestión</button>
+                        <button class="btn-no"  onclick="addToNoQuiere('${lead.Cliente_ID}')">No quiere</button>
+                    </div>
+
+            </div>
+
+            <div class="editejec">
+                <div class="lead-card-body-edit">
+                    <div class="edit-delete-card">
+                        <button class="btn-edit" onclick="editLead('${lead.Cliente_ID}')">
+                        <span class="material-symbols-outlined">
+                            edit
+                        </span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lead-card-body-ejec">
+                    <div class="edit-delete-card">
+                        <button class="btn-comercial"  onclick="openChangeExecutiveModal('${lead.Cliente_ID}')">
+                            <span class="material-symbols-outlined">
+                                group
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    `;
+                leadsContainer.innerHTML += card;
+            });
+// boton para eliminar leads 
+// <button class="btn-delete" style="background-color: orange; color: white;" onclick="deleteLead('${lead.Cliente_ID}')">Eliminar</button>
+
+            // Asegurarse de que los botones se enlacen correctamente después de renderizar las tarjetas
+            document.querySelectorAll('.open-comment-modal').forEach(button => {
+                button.addEventListener('click', function() {
+                    const leadId = this.getAttribute('data-lead-id');
+                    console.log("Abriendo modal para lead con ID:", leadId); // Verifica que esto no sea undefined
+                    openCommentModal(leadId);
+                });
+            });
+        }
+
+        async function editLead(clienteId) {
+    const token = localStorage.getItem('token');
+    const ejecutivoId = localStorage.getItem('selectedEjecutivo');
+    try {
+
+            let url = `/api/leads/${clienteId}`;
+
+            // Si se pasa un ejecutivoId, se agrega a la URL para filtrar los leads
+            if (ejecutivoId) {
+                url += `?ejecutivoId=${ejecutivoId}`;
+            }
+            
+        // Obtener datos del lead
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert(`Error al obtener el lead: ${errorData.message}`);
+            return;
+        }
+
+        const leadData = await response.json();
+        console.log('Datos del lead:', leadData);
+
+        // Llenar los campos del formulario
+        document.getElementById('editLeadId').value = leadData.Cliente_ID;
+        document.getElementById('editNombre').value = leadData.Nombre;
+        document.getElementById('editCiudad').value = leadData.Ciudad;
+        document.getElementById('editInteres').value = leadData.Interes;
+        document.getElementById('editNumero').value = leadData.Numero;
+
+        // Llenar el select con cursos
+        const cursoSelect = document.getElementById('editcursoSelect');
+        cursoSelect.innerHTML = ''; // Limpiar el select antes de llenarlo
+
+        // Agregar opción por defecto
+        const defaultOption = document.createElement('option');
+        defaultOption.value = '';
+        defaultOption.text = 'Seleccione un curso';
+        cursoSelect.appendChild(defaultOption);
+
+        // Obtener los cursos
+        const cursosResponse = await fetch('/api/cursos', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!cursosResponse.ok) {
+            const errorData = await cursosResponse.json();
+            alert(`Error al obtener cursos: ${errorData.message}`);
+            return;
+        }
+
+        const cursosData = await cursosResponse.json();
+        console.log('Cursos disponibles:', cursosData);
+
+        // Rellenar el select con los nombres de los cursos
+        cursosData.forEach(curso => {
+            const option = document.createElement('option');
+            option.value = curso.Curso_ID;
+            option.text = curso.Nombre;
+            cursoSelect.appendChild(option);
+        });
+
+        // Establecer el curso correspondiente en el select
+        if (leadData.Curso_ID) {
+            cursoSelect.value = leadData.Curso_ID;
+
+            // Mostrar la fecha del curso seleccionado
+            const cursoSeleccionado = cursosData.find(curso => curso.Curso_ID == leadData.Curso_ID);
+            if (cursoSeleccionado) {
+                const fecha = new Date(cursoSeleccionado.Fecha);
+                document.getElementById('editCursoFecha').value = fecha.toISOString().split('T')[0];
+            }
+        }
+
+        // Actualizar la fecha al seleccionar un curso
+        cursoSelect.addEventListener('change', function () {
+            const cursoSeleccionado = cursosData.find(curso => curso.Curso_ID == cursoSelect.value);
+            if (cursoSeleccionado) {
+                const fecha = new Date(cursoSeleccionado.Fecha);
+                document.getElementById('editCursoFecha').value = fecha.toISOString().split('T')[0]; // Actualizar la fecha al cambiar el curso
+            }
+        });
+
+        // Abrir el modal para editar
+        openEditModal();
+
+    } catch (error) {
+        console.error('Error al intentar editar el lead:', error);
+        alert('Error al intentar editar el lead.');
+    }
+}
+
+
+
+
+// Función para actualizar el lead después de editarlo
+async function updateLead(clienteId) {
+    const token = localStorage.getItem('token');
+    const ejecutivoId = localStorage.getItem('selectedEjecutivo');
+    const leadData = {
+        nombre: document.getElementById('editNombre').value,
+        ciudad: document.getElementById('editCiudad').value,
+        cursoId: document.getElementById('cursoSelect').value,
+        editInteres: document.getElementById('editInteres').value,
+        numero: document.getElementById('editNumero').value,
+    };
+
+    try {
+
+
+            let url = `/api/leads/${clienteId}`;
+
+            // Si se pasa un ejecutivoId, se agrega a la URL para filtrar los leads
+            if (ejecutivoId) {
+                url += `?ejecutivoId=${ejecutivoId}`;
+            }
+
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(leadData),
+        });
+
+        // Manejo de errores al actualizar el lead
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert(`Error al editar el lead: ${errorData.message}`);
+            return;
+        }
+
+        const updatedLead = await response.json();
+        console.log('Lead actualizado:', updatedLead);
+        // Aquí podrías cerrar el modal o actualizar la UI según sea necesario
+
+    } catch (error) {
+        console.error('Error al intentar actualizar el lead:', error);
+        alert('Error al intentar actualizar el lead.');
+    }
+}
+
+function openEditModal() {
+    document.getElementById('editLeadModal').style.display = 'block'; // Muestra el modal
+}
+
+async function saveLead() {
+    const clienteId = document.getElementById('editLeadId').value;
+    const token = localStorage.getItem('token');
+    const ejecutivoId = localStorage.getItem('selectedEjecutivo');
+
+    const leadData = {
+        nombre: document.getElementById('editNombre').value.trim(), // Asegúrate de que estos nombres coincidan
+        ciudad: document.getElementById('editCiudad').value.trim(),
+        interes: parseInt(document.getElementById('editInteres').value, 10), 
+        numero: document.getElementById('editNumero').value.trim(),
+        cursoId: parseInt(document.getElementById('editcursoSelect').value, 10) // Ajustado a minúscula
+    };
+
+    console.log('Datos que se enviarán en el PUT:', JSON.stringify(leadData, null, 2)); // Verifica el contenido
+
+    try {
+            let url = `/api/leads/${clienteId}`;
+
+            // Si se pasa un ejecutivoId, se agrega a la URL para filtrar los leads
+            if (ejecutivoId) {
+                url += `?ejecutivoId=${ejecutivoId}`;
+            }
+
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(leadData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.log('Error del servidor:', errorData);  // Verifica el error completo del servidor
+            alert(`Error al actualizar el lead: ${errorData.message}`);
+            return;
+        }
+
+        // alert('Lead actualizado con éxito');
+        // Cerrar el modal
+        document.getElementById('editLeadModal').style.display = 'none';
+        fetchLeads();
+        fetchCities() 
+    } catch (error) {
+        console.error('Error al intentar actualizar el lead:', error);
+        alert('Error al intentar actualizar el lead.');
+    }
+}
+
+
+// Función para cerrar el modal
+function closeEditModal() {
+    const modal = document.getElementById('editLeadModal'); // Cambia esto por el ID correcto de tu modal
+    modal.style.display = 'none'; // O usa el método que utilices para ocultar el modal
+}
+
+// Asegúrate de que tu select de cursos está poblado correctamente en algún momento, tal vez en la carga inicial de la página.
+
+
+// Función para manejar el envío del formulario de edición
+document.getElementById('editLeadForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); // Evitar el envío del formulario normal
+    const clienteId = document.getElementById('editLeadId').value; // Obtener el ID del lead
+
+    // Comprobar que el ID no sea vacío
+    if (!clienteId) {
+        alert('ID del lead no encontrado.'); // Manejo de error si el ID es nulo
+        return;
+    }
+
+    // Llama a la función para actualizar el lead
+    await updateLead(clienteId);
+});
+
+
+
+
+async function deleteLead(clienteId) {
+    const confirmation = confirm('¿Estás seguro de que deseas eliminar este lead?');
+    if (!confirmation) return;
+
+    const token = localStorage.getItem('token'); // Obtener el token
+
+    const ejecutivoId = localStorage.getItem('selectedEjecutivo');
+            let url = `/api/leads/${clienteId}`;
+
+            // Si se pasa un ejecutivoId, se agrega a la URL para filtrar los leads
+            if (ejecutivoId) {
+                url += `?ejecutivoId=${ejecutivoId}`;
+            }
+
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (response.ok) {
+        alert('Lead eliminado exitosamente');
+        fetchLeads(); // Recargar los leads
+    } else {
+        const errorData = await response.json();
+        alert(`Error al eliminar el lead: ${errorData.message}`);
+    }
+}
+
+// funciones para cambiar de ejecutivo 
+async function openChangeExecutiveModal(leadId) {
+    const token = localStorage.getItem('token');
+
+    // Limpiar el select
+    const executiveSelect = document.getElementById('executiveSelect');
+    executiveSelect.innerHTML = '<option value="">Seleccione un ejecutivo</option>'; // Opción por defecto
+    console.log("estos son los ejecutivos: "+executiveSelect.value);
+    // Obtener la lista de ejecutivos
+    const response = await fetch('/api/ejecutivos', {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        alert(`Error al obtener los ejecutivos: ${errorData.message}`);
+        return;
+    }
+
+    const executives = await response.json();
+    executives.forEach(executive => {
+        const option = document.createElement('option');
+        option.value = executive.Ejecutivo_ID; // Asegúrate de que esta propiedad exista
+        option.textContent = executive.Nombre; // Asumiendo que el nombre del ejecutivo se guarda aquí
+        executiveSelect.appendChild(option);
+    });
+
+    // Establecer el ID del lead que se va a actualizar
+    document.getElementById('leadId').value = leadId;
+
+    // Mostrar el modal
+    document.getElementById('changeExecutiveModal').style.display = 'block';
+}
+async function changeExecutive() {
+    const leadId = document.getElementById('leadId').value;
+    const executiveId = document.getElementById('executiveSelect').value;
+    const token = localStorage.getItem('token');
+
+    if (!executiveId) {
+        alert('Por favor, seleccione un ejecutivo.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/leads/${leadId}/change-executive`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ejecutivoId: executiveId })
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            alert(`Error al cambiar el ejecutivo: ${errorData.message}`);
+            return;
+        }
+
+        // alert('Ejecutivo cambiado con éxito');
+        document.getElementById('changeExecutiveModal').style.display = 'none';
+
+        // Actualizar la lista de leads
+        await fetchLeads(); // Asumiendo que tienes esta función para obtener y mostrar los leads
+    } catch (error) {
+        console.error('Error al intentar cambiar el ejecutivo:', error);
+        alert('Error al intentar cambiar el ejecutivo.');
+    }
+}
+
+
+function displayLeads(leads) {
+    const tableBody = document.getElementById('leadsTableBody');
+    tableBody.innerHTML = ''; // Limpiar la tabla antes de llenarla
+
+    leads.forEach(lead => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${lead.Cliente_ID}</td>
+            <td>${lead.Numero}</td>
+            <td>${lead.Ciudad}</td>
+            <td>${lead.CursoNombre}</td>
+            <td>${lead.Interes}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+// Obtener ejecutivos desde el backend y llenar el modal
+async function fetchEjecutivos() {
+    const token = localStorage.getItem('token');
+    const response = await fetch('/api/admiejecutivos', {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+
+    if (response.ok) {
+        const ejecutivos = await response.json();
+        populateEjecutivosModal(ejecutivos);
+    } else {
+        console.error('Error al obtener ejecutivos');
+    }
+}
+
+// Llenar el modal con las tarjetas de los ejecutivos
+function populateEjecutivosModal(ejecutivos) {
+    const ejecutivosList = document.getElementById('ejecutivosList');
+    ejecutivosList.innerHTML = ''; // Limpiar la lista de ejecutivos
+
+    ejecutivos.forEach(ejecutivo => {
+        const card = document.createElement('div');
+        card.classList.add('ejecutivo-card');
+        card.textContent = ejecutivo.Nombre;
+        card.dataset.id = ejecutivo.Ejecutivo_ID;
+
+        card.addEventListener('click', () => {
+            selectEjecutivo(ejecutivo.Ejecutivo_ID); // Cuando se hace clic en un ejecutivo
+        });
+
+        ejecutivosList.appendChild(card);
+    });
+}
+
+// Función para seleccionar un ejecutivo y cargar sus leads
+async function selectEjecutivo(ejecutivoId) {
+    // Guardar el Ejecutivo_ID en localStorage para que persista
+    localStorage.setItem('selectedEjecutivo', ejecutivoId);
+    
+    document.getElementById('ejecutivosModal').style.display = 'none'; // Cerrar el modal
+
+    // Llamar a la función para cargar los leads del ejecutivo seleccionado
+    await fetchLeads();
+    await fetchEjecutivoNombre();
+}
+
+// Función para decodificar el token JWT
+function parseJwt(token) {
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    } catch (e) {
+        return null;
+    }
+}
+
+// Función para verificar si el usuario es administrador
+function checkAdminRole() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        return false; // Si no hay token, no es administrador
+    }
+
+    const decodedToken = parseJwt(token);
+    if (decodedToken && decodedToken.role === 'admin') { // Suponiendo que el campo 'role' contiene el rol del usuario
+        return true; // Es administrador
+    }
+
+    return false; // No es administrador
+}
+
+
+
+// Mostrar el botón si el usuario es administrador
+document.addEventListener('DOMContentLoaded', () => {
+    const isAdmin = checkAdminRole();
+    const openEjecutivosModalBtn = document.getElementById('openEjecutivosModal');
+    const openCursosModalBtn = document.getElementById('addCourseButton');
+
+    if (isAdmin) {
+        openEjecutivosModalBtn.style.display = 'block'; // Mostrar botón
+        openCursosModalBtn.style.display = 'block'; // Mostrar botón
+    } else {
+        openEjecutivosModalBtn.style.display = 'none'; // Ocultar botón
+        openCursosModalBtn.style.display = 'none'; // Ocultar botón
+    }
+});
+
+// Función para obtener los detalles del ejecutivo y mostrar su nombre
+async function fetchEjecutivoNombre() {
+    const ejecutivoId = localStorage.getItem('selectedEjecutivo');
+    console.log("El nombre ejevuti: "+ejecutivoId);
+    if (ejecutivoId) {
+        try {
+            const response = await fetch(`/api/ejecutivo/${ejecutivoId}`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById('ejecutivoActivo').textContent = `${data.nombre}`; // Mostrar el nombre del ejecutivo
+            } else {
+                console.error('Error al obtener el nombre del ejecutivo');
+            }
+        } catch (error) {
+            console.error('Error en la petición:', error);
+        }
+    } else {
+        console.log('No hay un ejecutivo seleccionado');
+    }
+}
+
+
+
+// Llamar a la función al cargar la página
+document.addEventListener('DOMContentLoaded', fetchEjecutivoNombre);
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("filterExportModal");
+    const openModalBtn = document.getElementById("openFilterModalBtn");
+    const closeModalBtn = document.getElementById("closeFilterModalBtn");
+    const previewTableBody = document.querySelector("#previewTable tbody");
+    const ejecutivoId = localStorage.getItem('selectedEjecutivo');
+
+    // Abrir y cerrar el modal
+    openModalBtn.addEventListener("click", async () => {
+        modal.style.display = "block";
+        await loadFilterOptions(); // Cargar opciones de filtros
+    });
+    closeModalBtn.addEventListener("click", () => modal.style.display = "none");
+
+    // Cargar opciones de filtros
+    async function loadFilterOptions() {
+        const token = localStorage.getItem('token');
+
+        // Cargar ciudades
+        const ciudadesRes = await fetch(`/api/ciudadesfiltro?ejecutivoId=${ejecutivoId}`, { headers: { Authorization: `Bearer ${token}` } });
+        const ciudades = await ciudadesRes.json();
+        const ciudadSelect = document.getElementById("filterCiudad");
+        ciudadSelect.innerHTML = "<option value=''>Seleccione una ciudad</option>";
+        ciudades.forEach(c => ciudadSelect.innerHTML += `<option value="${c}">${c}</option>`);
+
+        // Cargar cursos
+        const cursosRes = await fetch(`/api/cursos`, { headers: { Authorization: `Bearer ${token}` } });
+        const cursos = await cursosRes.json();
+        const cursoSelect = document.getElementById("filterCurso");
+        cursoSelect.innerHTML = "<option value=''>Seleccione un curso</option>";
+        cursos.forEach(c => cursoSelect.innerHTML += `<option value="${c.Curso_ID}">${c.Nombre}</option>`);
+    }
+   // Formatear fecha
+   function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('es-ES'); // Cambia al formato de fecha local sin la hora
+    }
+    // Aplicar filtros y mostrar vista previa
+    document.getElementById("applyFilterBtn").addEventListener("click", async () => {
+        const filters = {
+            ciudad: document.getElementById("filterCiudad").value,
+            cursoId: document.getElementById("filterCurso").value,
+            interes: document.getElementById("filterInteres").value,
+            fechaDesde: document.getElementById("filterFechaDesde").value,
+            fechaHasta: document.getElementById("filterFechaHasta").value,
+            status: document.getElementById("filterStatus").value,
+            ejecutivoId
+        };
+
+        const response = await fetch(`/api/filtrar`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${localStorage.getItem('token')}` },
+            body: JSON.stringify(filters)
+        });
+        const data = await response.json();
+        
+        // Mostrar datos en la vista previa
+        previewTableBody.innerHTML = data.map(lead => `
+            <tr>
+                <td>${lead.Numero}</td>
+                <td>${lead.Nombre}</td>
+                <td>${lead.Ciudad}</td>
+                <td>${lead.Curso}</td>
+                <td>${lead.Interes}</td>
+                <td>${lead.UltimoComentario}</td>
+                <td>${formatDate(lead.FechaCreacion)}</td>
+            </tr>
+        `).join('');
+    });
+
+    // Exportar datos filtrados a CSV
+    document.getElementById("exportFilteredDataBtn").addEventListener("click", async () => {
+        const csvData = convertToCSV(Array.from(previewTableBody.querySelectorAll("tr")).map(row => {
+            return Array.from(row.querySelectorAll("td")).map(cell => cell.innerText);
+        }));
+
+        const blob = new Blob([csvData], { type: "text/csv" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "leads_filtrados.csv";
+        a.click();
+        URL.revokeObjectURL(url);
+    });
+
+    function convertToCSV(data) {
+        return data.map(row => row.join(",")).join("\n");
+    }
+});
+
+
+
+// Función para mostrar el nombre del ejecutivo en la interfaz
+function mostrarEjecutivoActivo(nombre) {
+    const ejecutivoActivoDiv = document.getElementById('ejecutivoActivo');
+    ejecutivoActivoDiv.textContent = `Ejecutivo activo: ${nombre}`;
+}
+
+// Llama a esta función al cargar la página
+fetchLeads();
+
+    // Funcionalidad para el botón de cerrar sesión
+    document.getElementById('logoutButton').addEventListener('click', () => {
+         // Eliminar el token del localStorage
+         localStorage.removeItem('token');
+         localStorage.removeItem('selectedEjecutivo');
+         // Redirigir al usuario a la página de login
+         window.location.href = '/';
+    });
+    // Función para cerrar el modal al hacer clic fuera de él
+    window.onclick = function(event) {
+        const modalcoment = document.getElementById('commentModal');
+        if (event.target === modalcoment) {
+            modalcoment.style.display = "none"; // Cerrar el modal si se hace clic en el área fuera del contenido
+        }
+    };
+    document.getElementById('commentForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const commentText = document.getElementById('commentText').value;
+        const leadId = document.getElementById('leadId').value;
+        const token = localStorage.getItem('token'); // Obtener el token
+        const res = await fetch(`/api/comments`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Asegurarse de enviar el token
+            },
+            body: JSON.stringify({ commentText, leadId })
+        });
+        if (res.ok) {
+            // alert('Comentario agregado exitosamente');
+            modalcoment.style.display = "none"; // Cerrar el modal de comentarios
+            document.getElementById('commentForm').reset();
+            fetchComments(leadId); // Actualizar los comentarios sin recargar la página
+            fetchLeads();
+        } else {
+            const errorData = await res.json();
+            alert(`Error al agregar el comentario: ${errorData.message}`);
+        }
+    });
+
+
+
+    </script>
+    
+</body>
+</html>

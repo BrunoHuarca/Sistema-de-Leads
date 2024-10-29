@@ -1,0 +1,788 @@
+ /* Estilo del modal */
+ .modal {
+    display: none; /* Oculto por defecto */
+    position: fixed; /* Mantener el modal en el centro de la pantalla */
+    z-index: 1; /* Asegurarse de que esté por encima de otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Alto completo */
+    overflow: auto; /* Habilitar el desplazamiento si es necesario */
+    background-color: rgb(0, 0, 0); /* Fondo negro */
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo negro con opacidad */
+}
+/* Estilo del contenido del modal */
+.modal-content {
+    background-color: #EDEEF0;
+    margin: 5% auto; /* Margen en el centro */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 10px;
+    width: 50%; /* Ancho del contenido */
+}
+/* Botón de cerrar */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover, .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.close-button {
+position: absolute;
+top: 10px;
+right: 15px;
+font-size: 1.5em;
+cursor: pointer;
+}
+
+form div {
+margin-bottom: 10px;
+}
+
+ul {
+list-style-type: none;
+padding: 0;
+}
+
+ul li {
+display: flex;
+justify-content: space-between;
+padding: 10px;
+background-color: #f2f2f2;
+margin-bottom: 5px;
+border-radius: 3px;
+}
+
+ul li div button {
+margin-left: 5px;
+}
+/* ------------------------header--------------------- */
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box; /* Asegura que los márgenes y paddings no afecten el ancho total */
+font-family: cairo;
+line-height: 15px;
+}
+
+.header {
+padding: 15px 30px;
+display: flex;                 /* Activar flexbox */
+justify-content: space-between; /* Espacio entre elementos de los extremos */
+align-items: center;           /* Centrar verticalmente los elementos */
+width: 100%;
+background-color: #ffffff;     /* Color de fondo opcional */
+}
+
+.titulo {
+flex: 1;                       /* Hace que el título ocupe el espacio disponible */
+text-align: center;            /* Centra el texto del título */
+}
+
+.logout, .user {
+width: auto;                   /* Asegura que solo ocupen el espacio necesario */
+}
+
+.logoutbtn{
+background-color: #EA2727;
+color: white;
+border-radius: 5px;
+padding: 10px 20px;
+border: none;
+}
+.logoutbtn:hover{
+background-color: #be1d1d;
+color: white;
+border-radius: 5px;
+padding: 10px 20px;
+border: none;
+cursor: pointer;
+}
+.ejec{
+background-color: #EDEDED;
+color: black;
+border-radius: 5px;
+padding: 10px 20px;
+border: none;
+}
+.ejec:hover{
+background-color: #d8d8d8;
+cursor: pointer;
+}
+
+
+
+/* ------------------------body---------------------  */
+
+.cuerpo{
+background-color: #EDEEF0;
+padding: 25px 30px;
+
+}
+body{
+background-color: #EDEEF0;
+}
+
+/* ------------------------funiconalidades---------------------  */
+.funcionalidades{
+display: flex;
+justify-content: space-between;
+margin-bottom: 25px;
+}
+.seccion1{
+display: flex;
+justify-content: start;
+}
+.seccion2{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.seccion3{
+display: flex;
+justify-content: right;
+align-items: center;
+}
+.secciondescarga{
+
+}
+.seccionagregar{
+
+}
+.seccionagregarcurso{
+margin-left: 5px; 
+}
+.descargar{
+background-color: #ffffff;
+color: black;
+border-radius: 5px;
+padding: 6px 10px;
+border: none;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.descargar:hover{
+background-color: rgb(190, 190, 190);
+cursor: pointer;
+
+}
+.material-symbols-outlined {
+color: #858585;
+font-variation-settings:
+'FILL' 0,
+'wght' 400,
+'GRAD' 0,
+'opsz' 24,
+}
+.btnagregar{
+color: white;
+background-color: #1F9A4A;
+border-radius: 5px;
+padding: 6px 70px;
+border: none;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+.btnagregar:hover{
+color: white;
+background-color: #1c8a43;
+cursor: pointer;
+}
+.blanco{
+color: white;
+}
+.btncurso{
+color: white;
+background-color: #1F9A4A;
+border-radius: 5px;
+padding: 10.5px 30px;
+border: none;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+}
+.btncurso:hover{
+color: white;
+background-color: #1c8a43;
+}
+.ultimocomentario{
+margin-right: 5px;
+}
+.btnleads{
+background-color: rgba(201, 201, 201, 0.4);
+border: 1px solid rgb(201, 201, 201);
+border-radius: 5px;
+padding: 9.5px 20px;
+}
+.btnleads:hover{
+background-color: rgba(122, 122, 122, 0.4);
+cursor: pointer;
+}
+.btninscritos{
+background-color: rgba(31, 154, 74, 0.4);
+border: 1px solid rgb(33, 156, 76);
+border-radius: 5px;
+padding: 9.5px 20px;
+}
+.btninscritos:hover{
+background-color: rgba(26, 131, 63, 0.4);
+cursor: pointer;
+}
+.btnmasivos{
+background-color: rgb(255, 166, 0, 0.4);
+border: 1px solid rgb(255, 166, 0);
+border-radius: 5px;
+padding: 9.5px 20px;
+}
+.btnmasivos:hover{
+background-color: rgba(206, 134, 0, 0.4);
+cursor: pointer;
+}
+.btnnoquiere{
+background-color: rgba(234, 39, 39, 0.4);
+border: 1px solid rgb(234, 39, 39);
+border-radius: 5px;
+padding: 9.5px 20px;
+}
+.btnnoquiere:hover{
+background-color: rgba(199, 33, 33, 0.4);
+cursor:pointer;
+}
+.irmasivos{
+margin-left: 5px;
+}
+.irnoquiere{
+margin-left: 5px;
+}
+.buscador{
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: white;
+border-radius: 5px;
+}
+.buscar{
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+outline:none;
+}
+.filtrointeres{
+margin-left: 5px;
+}
+.filtrointeres select{
+border: none;
+border-radius: 5px;
+padding: 4px 2px;
+}
+.filtrociudad{
+margin-left: 5px;
+}
+.filtrociudad select{
+border: none;
+border-radius: 5px;
+padding: 4px 2px;
+}
+.filtrociudad select:focus{
+border: none;
+border-radius: 5px;
+padding: 4px 2px;
+}
+/* ------------------------tabla---------------------  */
+
+.btn-yes,.btn-nose,.btn-no{
+color: rgb(0, 0, 0);
+border: none;
+border-radius: 5px;
+padding: 10px 10px;
+}
+.btn-yes{
+background-color: rgba(31, 154, 74, 0.4);
+border: 1px solid rgb(33, 156, 76);
+}
+.btn-yes:hover{
+background-color: rgba(26, 131, 63, 0.4);
+cursor: pointer;
+}
+.btn-nose{
+background-color: rgb(255, 166, 0, 0.4);
+border: 1px solid rgb(255, 166, 0);
+}
+.btn-nose:hover{
+background-color: rgba(206, 134, 0, 0.4);
+cursor: pointer;
+}
+.btn-no{
+background-color: rgba(234, 39, 39, 0.4);
+border: 1px solid rgb(234, 39, 39); 
+}
+.btn-no:hover{
+background-color: rgba(199, 33, 33, 0.4);
+cursor:pointer;
+}
+/* para las tarjetas de leads */
+.leads-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en varias filas */
+    width: 100%; /* Asegurarse de que el contenedor ocupa el 100% del ancho */
+    box-sizing: border-box; /* Incluir padding y borde en el tamaño total */
+}
+
+.lead-card {
+    border-radius: 8px; /* Bordes redondeados */
+    width: 100%;
+    color: rgb(0, 0, 0);
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.editejec{
+    display: flex;
+    width: 12%;
+}
+.lead-card-body {
+    display: flex;
+    align-items: center;
+    background-color: white; /* Fondo claro para las tarjetas */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 13px 0px; /* Espaciado interno */
+    width: 95%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para efecto de profundidad */
+}
+.lead-card-body-edit {
+    margin-left: 5%;
+    border-radius: 8px; /* Bordes redondeados */
+    width: 45%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para efecto de profundidad */
+}
+
+.lead-card-body-ejec {
+    margin-left: 5%;
+    background-color: white; /* Fondo claro para las tarjetas */
+    border-radius: 8px; /* Bordes redondeados */
+    width: 45%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para efecto de profundidad */
+}
+.lead-row {
+    display: flex; /* Usar flexbox para alinear los elementos en fila */
+    justify-content: space-between; /* Espaciar los elementos uniformemente */
+    padding: 5px 0; /* Espacio vertical entre filas */
+}
+
+.lead-cell {
+    
+    text-align: center; /* Centrar el texto dentro de las celdas */
+}
+.fecha{
+    width: 15%;
+}
+.numero2{
+    width: 15%;
+}
+.ciudad{
+    width: 15%;
+}
+.curso{
+    width: 23%;
+}
+.interes{
+    width: 10%;
+}
+
+
+.acciones{
+    width: 22%;
+}
+.separator {
+    border-left: 1px solid #8d8d8d; /* Línea vertical delgada y gris */
+    height: 25px;
+}
+
+/* para la cabecera de los leads */
+.lead-card2 {
+    background-color: #545454; /* Fondo claro para las tarjetas */
+    border-radius: 8px; /* Bordes redondeados */
+    width: 95%;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 14px 0;
+}
+.lead-row2 {
+    display: flex; /* Usar flexbox para alinear los elementos en fila */
+    justify-content: space-between; /* Espaciar los elementos uniformemente */
+    padding: 5px 0; /* Espacio vertical entre filas */
+}
+.leads-container2 {
+    display: flex;
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en varias filas */
+    gap: 10px; /* Espacio entre las tarjetas */
+    width: 100%; /* Asegurarse de que el contenedor ocupa el 100% del ancho */
+    box-sizing: border-box; /* Incluir padding y borde en el tamaño total */
+}
+.btn-edit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    padding: 19px 24px;
+    border-radius: 5px;
+}
+.btn-edit:hover{
+    background-color: rgb(190, 190, 190);
+    cursor: pointer;
+}
+.btn-comercial{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    padding: 19px 24px;
+    border-radius: 5px;
+}
+.btn-comercial:hover{
+    background-color: rgb(190, 190, 190);
+    cursor: pointer;
+}
+
+.lead-card-body2 {
+    margin-top: 10px; /* Espacio entre el encabezado y el cuerpo */
+}
+.addcoment{
+    border: none;
+    margin-left: 5px;
+    background-color: #EBEBEB;
+    padding: 11px 15px;
+    border-radius: 5px;
+}
+.addcoment:hover{
+    background-color: #d8d8d8;
+    cursor: pointer;
+}
+/* ------------------------modales---------------------  */
+.tituloform{
+display: flex;
+align-items: center;
+justify-content: center;
+margin-bottom: 20px;
+}
+.lead-entry {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
+}
+
+.lead-entry label {
+margin-right: 10px;
+}
+
+.lead-entry input {
+margin-right: 20px; /* Espacio entre los campos */
+flex: 1; /* Para que los campos se ajusten al ancho del contenedor */
+border: none;
+border-radius: 5px;
+background-color: white;
+height: 25px;
+padding: 0 5px;
+}
+
+.lead-entry .numero2 {
+max-width: 150px; /* Limitar el ancho del campo número */
+}
+
+.lead-entry .nombre {
+flex-grow: 2; /* Hacer que el campo nombre sea más grande que el número */
+}
+#addLeadEntryBtn{
+
+}
+#addLeadForm input, #addLeadForm select{
+border: none;
+border-radius: 5px;
+background-color: white;
+height: 25px;
+padding-left: 5px;
+outline:none;
+}
+#cursoSelect{
+width: 200px;
+}
+#cursoFecha{
+text-align: center;
+}
+
+.btnmasleads{
+background-color: rgba(31, 154, 74, 0.4);
+border: 1px solid rgb(33, 156, 76);
+padding: 5px;
+border-radius: 5px;
+}
+.btnmasleads:hover{
+background-color: rgba(26, 131, 63, 0.4);
+cursor: pointer;
+}
+
+.btnenviarleads{
+background-color: rgba(31, 154, 74);
+border: 1px solid rgb(33, 156, 76);
+padding: 10px 20px;
+border-radius: 5px;
+color: white;
+}
+.btnenviarleads:hover{
+background-color: rgba(26, 131, 63);
+cursor: pointer;
+}
+
+.remove-entry-btn{
+border: none;
+padding: 2px 6px;
+color: white;
+background-color: red;
+border-radius: 4px;
+}
+.remove-entry-btn:hover{
+cursor: pointer;
+}
+
+/* estilos para el filtro y exportar  */
+#filterForm input, #filterForm select{
+border: none;
+border-radius: 5px;
+background-color: white;
+height: 25px;
+padding-left: 5px;
+outline:none;
+}
+.btn1{
+background-color: rgba(31, 154, 74, 0.4);
+border: 1px solid rgb(33, 156, 76);
+padding: 5px;
+border-radius: 5px;
+}
+.btn1:hover{
+background-color: rgba(26, 131, 63, 0.4);
+cursor: pointer;
+}
+.btn2{
+background-color: rgba(31, 154, 74);
+border: 1px solid rgb(33, 156, 76);
+padding: 10px 20px;
+border-radius: 5px;
+color: white;
+}
+.btn2:hover{
+background-color: rgba(26, 131, 63);
+cursor: pointer;
+}
+.btn3{
+
+background-color: rgb(234, 39, 39);
+border: 1px solid rgb(234, 39, 39);
+padding: 10px 20px;
+border-radius: 5px;
+color: white;
+}
+.btn3:hover{
+background-color: rgba(199, 33, 33);
+cursor: pointer;
+}
+.filtro1, .filtro2, .filtro3{
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.izq{
+width: 45%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+}
+.der{
+width: 45%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.tablafiltro{
+background-color: white;
+border-radius: 10px;
+padding: 2px;
+}
+
+/* para el agregar comentarios  */
+#commentForm textarea{
+border: none;
+border-radius: 5px;
+background-color: white;
+height: 30px;
+width: 50%;
+padding-left: 5px;
+outline:none;
+}
+.centrar{
+display: flex;
+align-items: center;
+justify-content:space-between
+}
+.comentariosantes{
+margin-bottom: 10px;
+display: flex;
+justify-content: space-between;
+}
+#editLeadForm select, #editLeadForm input{
+border: none;
+border-radius: 5px;
+background-color: white;
+height: 25px;
+padding-left: 5px;
+outline:none;
+}
+#cursoForm select, #cursoForm input{
+border: none;
+border-radius: 5px;
+background-color: white;
+height: 25px;
+padding-left: 5px;
+outline:none;
+}
+.tabladecursos{
+width: 100%;
+}
+.tabladecursos tr{
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.tabladecursos td{
+width: 30%;
+}
+.editarbtn{
+border-radius: 5px;
+padding: 5px;
+background-color: rgb(255, 166, 0, 0.4);
+border: 1px solid rgb(255, 166, 0);
+}
+.eliminarbtn{
+border-radius: 5px;
+padding: 5px;
+background-color: rgba(234, 39, 39, 0.4);
+border: 1px solid rgb(234, 39, 39);
+}
+.editarbtn:hover{
+background-color: rgba(206, 134, 0, 0.4);
+cursor: pointer;
+}
+.eliminarbtn:hover{
+background-color: rgba(199, 33, 33, 0.4);
+cursor:pointer;
+}
+.medio{
+display: flex;
+justify-content: center;
+}
+#cursoTableBody tr{
+margin-bottom: 5px;
+}
+.derecha{
+display: flex;
+justify-content: end;
+}
+.derecha .eliminarbtn{
+margin-left: 5px;
+}
+
+#changeExecutiveForm select{
+border: none;
+border-radius: 5px;
+background-color: white;
+height: 38px;
+padding-left: 5px;
+outline:none;
+width: 60%;
+}
+#changeExecutiveForm{
+display: flex;
+justify-content: space-between;
+}
+.ejecutivo{
+width: 70%;
+}
+.botones{
+
+width: 30%;
+display: flex;
+justify-content: end;
+}
+.botones .btn3{
+margin-left: 5px;
+}
+
+
+#ejecutivosList {
+display: grid; /* Usar grid layout */
+grid-template-columns: repeat(4, 1fr); /* Crear 4 columnas de igual ancho */
+gap: 10px; /* Espacio entre los elementos */
+}
+
+.ejecutivo-card {
+padding: 10px; /* Espaciado interno */
+background-color: white; /* Fondo de las tarjetas */
+border-radius: 5px; /* Bordes redondeados */
+text-align: center; /* Centrar el texto */
+}
+.ejecutivo-card:hover{
+
+background-color: rgb(206, 206, 206); /* Fondo de las tarjetas */
+cursor: pointer;
+}
+.tablaycifra{
+    display: flex;
+    width: 100%;
+}
+.tablaiz{
+    width: 75%;
+}
+.cifrader{
+    margin-top: 63px;
+    border-radius: 10px;
+    padding: 20px;
+    width:25%;
+    background-color: white;
+}
+.datosestadisticos div{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+
+}

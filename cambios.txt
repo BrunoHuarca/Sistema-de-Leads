@@ -1,0 +1,37 @@
+
+intereses : 30 50 80 90  							(listo)
+
+agreagar boton de pendiente (masivos)						(listo)
+
+fecha del lead agregado 							(listo)
+
+eliminar horario								(listo)
+
+ponerle mismo nombre de los botones para inscritors pendiente y masivo		(listo)
+
+separar por ciudades (en la tabla agregar botones) (inscritos y masivos)	(listo)
+
+masivos (opcion para volver a llamar (retornar)) 				(listo)
+
+poder agregar un lead en la vista masivo					(listo)
+
+arreglar el filtro por ciudades depende de cada vista				(listo)
+
+cambiar de usuario								(listo)													
+Agregar leads masivos en el dashboard y demas vistas 				(listo)	
+
+filtrar para descargar (de todas las vistas)					(listo)	
+
+exportar comentarios el ultimo							(listo)	
+
+pendiente == en gestion								(listo)	
+
+ocultar eliminar 								(listo)	
+
+--------------------------   PREGUNTAR  --------------------------
+
+La fecha de masivos, inscritos y la que NoQuiere
+
+--------------------------   NUEVOS CAMBIOS   --------------------------
+
+

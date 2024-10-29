@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" /> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+body {
+    font-family: cairo;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("https://www.peru.travel/Contenido/Destino/Imagen/es/3/1.2/Principal/Plaza%20de%20Armas%20Arequipa.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.22; /* Ajusta este valor para cambiar la opacidad */
+    z-index: -1; /* Asegura que la imagen quede detrás del contenido */
+}
+.login{
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.formulario{
+    background: linear-gradient(to bottom right, #0080ED, #000031);
+    padding: 70px 50px;
+    border-radius: 15px;
+    color: white;
+    text-align: center;
+    width: 20%;
+}
+.loguito{
+    width: 180px;
+    height: auto;
+}
+.caja{
+    color: white;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0);
+    height: 25px;
+    padding-left: 5px;
+    outline:none;
+}
+.caja::placeholder{
+    color: white;
+    font-weight:lighter;
+    font-size: 14px;
+}
+.campo{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    border-bottom: 0.3px solid white;
+    height: 30px;
+    margin-bottom: 40px;
+}
+.titulo{
+    font-weight: bold;
+    font-size: 18px;
+}
+.botoncito{
+    border-radius: 10px;
+    background-color: white;
+    border: none;
+    padding: 10px 20px;
+}
+.botoncito:hover{
+
+    cursor: pointer;
+}
+    </style>
+</head>
+
+<body>
+    <div class="login">
+        <div class="formulario">
+            <img class="loguito" src="https://axioneduca.com/wp-content/uploads/2024/02/Logo-blanco.png" alt="">
+            <p class="titulo">Iniciar sesión</p>
+            <form id="loginForm">
+                <div class="campo">
+                    <label for="correoLogin">
+                        <span class="material-symbols-outlined">
+                        person
+                        </span>
+                    </label>
+                    <input class="caja correo" type="email" id="correoLogin" name="correo" placeholder="Correo" required><br><br>
+                </div>
+
+                <div class="campo">
+                    <label for="contraseñaLogin">
+                        <span class="material-symbols-outlined">
+                            lock
+                        </span>
+                    </label>
+                    <input class="caja contra" type="password" id="contraseñaLogin" name="contraseña" placeholder="Contraseña" required><br><br>
+                </div>
+
+                <button class="botoncito" type="submit">Ingresar</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        // Manejo del formulario de login
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Prevenir el envío del formulario
+    
+            const correo = document.getElementById('correoLogin').value;
+            const contraseña = document.getElementById('contraseñaLogin').value;
+    
+            // Enviar los datos de login al backend
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ correo, contraseña }),
+            });
+    
+            const data = await response.json();
+            if (response.ok) {
+                // Almacenar el token en localStorage
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('selectedEjecutivo', data.ejecutivoId); // Guardar el ID del ejecutivo
+
+                // Redirigir a otra página (por ejemplo, dashboard)
+                window.location.href = '/dashboard.html';  // Cambia esto a tu página de dashboard
+            } else {
+                alert(`Error: ${data.message}`);
+            }
+        });
+    </script>
+    
+</body>
+</html>
